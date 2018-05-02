@@ -1,0 +1,292 @@
+/*const fs=require('fs');
+const path=require('path');
+const http=require('http');
+const hostname='localhost';
+const port=3000;
+
+const server= http.createServer((req,res)=>{
+	//console.log(req.headers);
+	console.log('Request for'+req.url+' by method '+req.method);
+	if(req.method=='GET')
+	{
+		var fileUrl;
+		if(req.url=='/')
+			fileUrl='/a.html';
+		else
+			fileUrl=req.url;
+		var filePath=path.resolve('./pubic'+fileUrl);
+		const fileExt=path.extname(filePath);
+		if(fileExt=='.html')
+		{
+			fs.exists(filePath,(exists)=> {
+				if(!exists)
+				{
+					res.StatusCode=404;
+					res.setHeader('Content-Type','text/html');
+					res.end('<html><body><h1>Error : 404 : '+fileUrl+'not found !!</h1></body></html>');
+					return;
+				}
+				res.StatusCode=200;
+				res.setHeader('Content-Type','text/html');
+					res.end('<html><body><h1>Success !!</h1></body></html>');
+					fs.createReadStream(filePath).pipe(res);
+			})
+		}
+		else
+		{
+			res.StatusCode=404;
+			res.setHeader('Content-Type','text/html');
+					res.end('<html><body><h1>Error : 404 : '+fileUrl+'not a html file !!!</h1></body></html>');
+					
+		}
+	}
+	else
+	{
+		res.StatusCode=404;
+		res.setHeader('Content-Type','text/html');
+					res.end('<html><body><h1>Error : 404 : '+req.method+'not supported !!</h1></body></html>');
+
+	}
+})
+
+server.listen(port,hostname,()=>{
+	console.log(`server running at http://${hostname}:${port}/`)
+});*/
+
+Mongo
+
+cont MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+
+const url = 'mongodb://localhost:27017/data';
+
+
+
+
+
+MongoClient.connect(url,(err, database) => {
+	assert.equal(err,null);
+	console.log('Connected correctly to server');
+	
+	const dbs=database.db("Midb")
+	const collection=dbs.collection("dishes");
+	
+	collection.insertOne({"name":"Mandeep","description":"testing mongo with node"},
+	
+	(err, result) => {
+		assert.equal(err,null);
+		console.log("After Insert:\n");
+		console.log(result.ops);
+		collection.find({}).toArray((err, docs) => {
+			assert.equal(err.null);
+			
+			console,log("Found:\n");
+			console.log(docs);
+			dbs.dropCollection("dishes", (err, result) => {
+				assert.equal(err,null);
+				database.close();
+			});
+		});
+	});
+});
+	
+	
+var rect = require('./index2')
+function solve(l,b)
+{
+	console.log("Values" + l + "and" + b)
+	if(l<=0 || b<=0)
+	{
+		console.log("");	
+	}
+	else
+	{
+		console.log("Area :"+ rect.area(l,b));
+		
+	}	
+}
+solve(3,4)
+
+
+xpress
+
+const morgan = require('morgan');
+const express = require('express');
+const http = require('http');
+const hostname='localhost';
+const port=3000;
+const app=express();
+
+app.use(morgan('dev'));
+app.use(express.static(__dirname +'/public'));
+
+app.use((req, res, next) => {
+	//console.log(req.headers);
+	res.statusCode= 200;
+	res.setHeader('Content-Type', 'text/html');
+	res.end('<html><body><h1>Kiran Kumar</h1> <h2>11507059</h2></body></html>');	
+})
+
+const server= http.createServer(app);
+server.listen(port, hostname, () => {
+	console.log("Server running at http://${hostname}:${port}/");
+})
+
+https
+
+const fs = require('fs');
+const path = require('path');
+const http = require('http');
+const hostname='localhost';
+const port=3000;
+
+const server = http.createServer((req,res) => {
+//console.log(req.headers);
+console.log('Request for ' + req.url + 'by method ' + req.method);
+if(req.method == 'GET')
+{
+	var fileUrl;
+	if(req.url == '/')
+		fileUrl = '/file.html';
+	else
+		fileUrl = req.url;
+	var filePath=path.resolve('./public'+fileUrl);
+	const fileExt= path.extname(filePath);
+	
+	if (fileExt == '.html')
+	{
+	fs.exists(filePath, (exists) => {
+	if (!exists)
+	{
+	res.statusCode= 404;
+	res.setHeader('Content-Type','text/html');
+	res.end('<html><body><h1>Error 404: '+fileUrl+ 
+			'not found</h1></body></html>');
+	return;
+	res.statusCode = 200;
+	res.setHeader('Content-Type','text/html');
+	res.end('<html><body><h1>Success: </h1></body></html>');
+	fs.createReadStream(filePath).pipe(res);
+	})
+	}
+	else
+	{
+	res.statusCode = 404;
+	res.setHeader('Content-Type','text/html');
+	res.end('<html><body><h1>Error 404: '+fileUrl+ 
+			'not a HTML file</h1></body></html>');
+	}
+}
+else {
+	res.statusCode = 404;
+	res.setHeader('Content-Type','text/html');
+	res.end('<html><body><h1>Error 404: '+ req.method + 
+			'not supported</h1></body></html>');
+	}
+	}
+	server.listen(port, hostname, () => {
+	console.log('Server running at https://$(hostname):$(port)/');
+	});
+
+
+
+	mongoose schema
+
+const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+const Dishes = require('./models/ABC');
+const url='mongodb://localhost:27017/Midb';
+const connect = mongoose.connect(url, {
+	useMongoClient: true
+	});
+	connect.then((db) => {
+	console.log('Connected correctly to server');
+	var newDish = Dishes({
+		name:'Me21',
+		description:'trying'
+		});
+		newDish.save()
+			.then((dish) => {
+			console.log(dish);
+			return Dishes.find({}).exec();
+			})
+			
+			.catch((err) => {
+			console.log(err);
+			});
+	});
+abc schema
+
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const dishSchema = new Schema({
+	
+	name:{
+	type: String,
+	required: true,
+	unique: true
+	},
+	description:{
+	type: String,
+	required: true
+	
+	}
+	},{
+	timestamps:true
+	});
+	var Dishes = mongoose.model('Dish', dishSchema);
+	module.exports = Dishes;
+
+session
+
+
+var express=require('express'),
+  app=express(),
+  session=require('express-session');
+app.use(session({
+     secret:'Mysecret',
+	 resave:true,
+	 saveUninitialized:true
+	 }));
+	 
+	 //authentication and authorization middleware
+	  var auth=function(req,res,next){
+	  if(res.session&&res.session.user==="suraj" && req.session.admin)
+	  return next();
+	  
+	  else
+	  return res.sendStatus(401);
+	  };
+	  //login endpoint
+	  app.get('/login',function(req,res){
+	  if(!req.query.username||!req.query.password){
+	  res.send('login failed');
+	  
+	  
+	  }
+	  else if(req.query.username==="suraj" || req.query.password==="suraj1150"){
+	    req.session.user="suraj";
+		req.session.admin=true;
+		res.send("login successfully");
+		}
+		}
+		);
+		
+		//logout endpoint
+		
+		app.get('/logout',function(req,res){
+		req.session.destroy();
+		res.send("logout success!");
+		});
+		
+		//get content endpoint
+		app.get('/content',auth,function(req,res){
+		  res.send("u see content u are login");
+		  });
+		  
+		  app.listen(5000);
+		  console.log("Running at http://localhost:5000");
+	  
+	  
+	  
+	  
